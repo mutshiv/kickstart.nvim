@@ -102,7 +102,7 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -212,7 +212,6 @@ if not vim.loop.fs_stat(lazypath) then
   vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
-
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -294,6 +293,89 @@ require('lazy').setup({
         ['<leader>h'] = { 'Git [H]unk' },
       }, { mode = 'v' })
     end,
+  },
+
+  -- Harpoon
+  {
+    'theprimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('harpoon'):setup()
+    end,
+    keys = {
+      {
+        '<leader>a',
+        function()
+          require('harpoon'):list():add()
+        end,
+        desc = 'harpoon file add',
+      },
+      {
+        '<leader>L',
+        function()
+          local harpoon = require 'harpoon'
+          harpoon.ui:toggle_quick_menu(harpoon:list())
+        end,
+        desc = 'harpoon file list',
+      },
+      {
+        '<leader>1',
+        function()
+          require('harpoon'):list():select(1)
+        end,
+        desc = 'harpoon to file 1',
+      },
+      {
+        '<leader>2',
+        function()
+          require('harpoon'):list():select(2)
+        end,
+        desc = 'harpoon to file 2',
+      },
+      {
+        '<leader>3',
+        function()
+          require('harpoon'):list():select(3)
+        end,
+        desc = 'harpoon to file 3',
+      },
+      {
+        '<leader>4',
+        function()
+          require('harpoon'):list():select(4)
+        end,
+        desc = 'harpoon to file 4',
+      },
+      {
+        '<leader>5',
+        function()
+          require('harpoon'):list():select(5)
+        end,
+        desc = 'harpoon to file 5',
+      },
+    },
+  },
+
+  -- nvim v0.8.0
+  {
+    'kdheepak/lazygit.nvim',
+    cmd = {
+      'LazyGit',
+      'LazyGitConfig',
+      'LazyGitCurrentFile',
+      'LazyGitFilter',
+      'LazyGitFilterCurrentFile',
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+      { '<leader>lg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
+    },
   },
 
   -- NOTE: Plugins can specify dependencies.
