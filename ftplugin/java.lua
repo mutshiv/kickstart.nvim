@@ -1,7 +1,6 @@
 local java_cmds = vim.api.nvim_create_augroup('java_cmds', { clear = true })
 local cache_vars = {}
 
-print 'jdtls starting '
 -- Here you can add files/folders that you use at
 -- the root of your project. `nvim-jdtls` will use
 -- these to find the path to your project source code.
@@ -149,7 +148,8 @@ local function jdtls_setup(event)
     jdtls.extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
     local ok_cmp, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
-    cache_vars.capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), ok_cmp and cmp_lsp.default_capabilities() or {})
+    cache_vars.capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(),
+      ok_cmp and cmp_lsp.default_capabilities() or {})
   end
 
   -- The command that starts the language server
@@ -188,7 +188,8 @@ local function jdtls_setup(event)
     java = {
       jdt = {
         ls = {
-          vmargs = '-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m',
+          vmargs =
+          '-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m',
         },
       },
       eclipse = {
@@ -274,4 +275,3 @@ vim.api.nvim_create_autocmd('FileType', {
   desc = 'Setup jdtls',
   callback = jdtls_setup,
 })
-
